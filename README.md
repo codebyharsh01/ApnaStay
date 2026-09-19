@@ -43,7 +43,6 @@ The platform connects users with verified **PGs (Paying Guest accommodations)**,
 ## ✨ Features
 
 ### 🔍 For Students & Seekers
-
 - **Multi-Criteria Search & Filtering** — Filter by Category (`PG`, `Flat`, `Mess`), Location, Area, Furnishing Status, Budget, and keywords
 - **Rich Accommodation Details** — Image galleries, price breakdowns, room types, amenities, and owner profiles
 - **Instant One-Click Booking** — Submit reservation requests with move-in dates and stay duration
@@ -51,13 +50,11 @@ The platform connects users with verified **PGs (Paying Guest accommodations)**,
 - **🤖 AI Chatbot Assistant** — Floating chat bubble powered by a custom-trained ML model with typing indicators and smart fallback responses
 
 ### 🛡️ For Administrators & Property Owners
-
 - **Full CRUD for Listings** — Create, edit, toggle availability, or delete properties with multi-image support
 - **Booking Request Dashboard** — View, filter (`Pending`, `Confirmed`, `Rejected`), approve/reject bookings
 - **One-Click Database Seeder** — Populate MongoDB with high-quality sample listings across multiple cities
 
 ### 🛠️ Developer & Integration Features
-
 - **In-App API Guide** — Interactive Postman documentation modal baked into the frontend
 - **Robust MongoDB Connection** — Built-in Google DNS fallback to fix Windows SRV lookup issues with Atlas
 - **Custom-Trained NLP Model** — TF-IDF + Logistic Regression trained on 74+ Q&A pairs, served via Flask
@@ -276,43 +273,39 @@ graph TB
 ## 💻 Tech Stack
 
 ### Frontend
-
-| Tool         | Version | Purpose                 |
-| ------------ | ------- | ----------------------- |
-| React        | 18.3    | UI component framework  |
-| Vite         | 5.3     | Build tool & dev server |
-| Tailwind CSS | 3.4     | Utility-first styling   |
-| Lucide React | 0.395   | Icon library            |
-| Axios        | 1.7     | HTTP client             |
+| Tool | Version | Purpose |
+|------|---------|---------|
+| React | 18.3 | UI component framework |
+| Vite | 5.3 | Build tool & dev server |
+| Tailwind CSS | 3.4 | Utility-first styling |
+| Lucide React | 0.395 | Icon library |
+| Axios | 1.7 | HTTP client |
 
 ### Backend
-
-| Tool          | Version | Purpose                       |
-| ------------- | ------- | ----------------------------- |
-| Node.js       | 20+     | Runtime                       |
-| Express.js    | 4.19    | REST API framework            |
-| Mongoose      | 8.5     | MongoDB ODM                   |
-| MongoDB Atlas | —       | Cloud database                |
-| dotenv        | 16.4    | Env variable management       |
-| cors          | 2.8     | Cross-origin request handling |
+| Tool | Version | Purpose |
+|------|---------|---------|
+| Node.js | 20+ | Runtime |
+| Express.js | 4.19 | REST API framework |
+| Mongoose | 8.5 | MongoDB ODM |
+| MongoDB Atlas | — | Cloud database |
+| dotenv | 16.4 | Env variable management |
+| cors | 2.8 | Cross-origin request handling |
 
 ### AI Chatbot
-
-| Tool           | Version | Purpose                      |
-| -------------- | ------- | ---------------------------- |
-| Python         | 3.11+   | Runtime                      |
-| Flask          | latest  | HTTP API server              |
-| Flask-CORS     | latest  | Cross-origin support         |
-| scikit-learn   | latest  | TF-IDF + Logistic Regression |
-| joblib         | latest  | Model serialization (.pkl)   |
-| pandas / numpy | latest  | Data handling                |
+| Tool | Version | Purpose |
+|------|---------|---------|
+| Python | 3.11+ | Runtime |
+| Flask | latest | HTTP API server |
+| Flask-CORS | latest | Cross-origin support |
+| scikit-learn | latest | TF-IDF + Logistic Regression |
+| joblib | latest | Model serialization (.pkl) |
+| pandas / numpy | latest | Data handling |
 
 ### DevOps & Infrastructure
-
-| Tool                | Purpose                             |
-| ------------------- | ----------------------------------- |
-| Docker              | Container runtime                   |
-| Docker Compose v2   | Multi-service orchestration         |
+| Tool | Purpose |
+|------|---------|
+| Docker | Container runtime |
+| Docker Compose v2 | Multi-service orchestration |
 | nginx:stable-alpine | Static file serving + reverse proxy |
 
 ---
@@ -381,20 +374,18 @@ apnastay/
 ## ⚙️ Prerequisites
 
 ### For Local Development
-
-| Requirement           | Version | Check                                          |
-| --------------------- | ------- | ---------------------------------------------- |
-| Node.js               | v18+    | `node --version`                               |
-| npm                   | v9+     | `npm --version`                                |
-| Python                | 3.11+   | `python --version`                             |
-| MongoDB Atlas account | —       | [cloud.mongodb.com](https://cloud.mongodb.com) |
+| Requirement | Version | Check |
+|---|---|---|
+| Node.js | v18+ | `node --version` |
+| npm | v9+ | `npm --version` |
+| Python | 3.11+ | `python --version` |
+| MongoDB Atlas account | — | [cloud.mongodb.com](https://cloud.mongodb.com) |
 
 ### For Docker
-
-| Requirement    | Version | Check                    |
-| -------------- | ------- | ------------------------ |
-| Docker Desktop | 24.x+   | `docker --version`       |
-| Docker Compose | v2.x+   | `docker compose version` |
+| Requirement | Version | Check |
+|---|---|---|
+| Docker Desktop | 24.x+ | `docker --version` |
+| Docker Compose | v2.x+ | `docker compose version` |
 
 ---
 
@@ -422,7 +413,7 @@ You need **three terminal windows** running simultaneously.
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/codebyharsh01/ApnaStay.git
+git clone https://github.com/harsh/ApnaStay.git
 cd apnastay
 ```
 
@@ -450,7 +441,6 @@ python app.py
 ```
 
 Expected training output:
-
 ```
 [*] Loading training data from: .../chatbot/data/training_data.csv
 [+] Loaded 74 Q&A pairs.
@@ -488,11 +478,11 @@ docker compose build
 docker compose up -d
 ```
 
-| Service              | URL                              |
-| -------------------- | -------------------------------- |
-| **Frontend (nginx)** | http://localhost                 |
-| **Backend API**      | http://localhost:5000/api/health |
-| **Chatbot API**      | http://localhost:5001/api/health |
+| Service | URL |
+|---------|-----|
+| **Frontend (nginx)** | http://localhost |
+| **Backend API** | http://localhost:5000/api/health |
+| **Chatbot API** | http://localhost:5001/api/health |
 
 ### Common Docker Commands
 
@@ -512,12 +502,10 @@ docker compose build --no-cache  # Force full rebuild
 To populate MongoDB with sample PGs, Flats, and Messes across Bangalore, Delhi, Kota, and Pune:
 
 **Option A — via Admin Portal UI:**
-
 1. Open the app → click **Admin Portal** in the navbar
 2. Click **"Reset / Seed Database"**
 
 **Option B — via HTTP:**
-
 ```bash
 curl -X POST http://localhost:5000/api/seed
 ```
@@ -529,7 +517,6 @@ curl -X POST http://localhost:5000/api/seed
 ### Health Check
 
 #### `GET /api/health`
-
 ```json
 {
   "status": "API operational",
@@ -543,27 +530,26 @@ curl -X POST http://localhost:5000/api/seed
 
 ### Properties Endpoints
 
-| Method   | Endpoint              | Description                       |
-| -------- | --------------------- | --------------------------------- |
-| `GET`    | `/api/properties`     | List all (supports query filters) |
-| `GET`    | `/api/properties/:id` | Get single property               |
-| `POST`   | `/api/properties`     | Create new listing                |
-| `PUT`    | `/api/properties/:id` | Update listing                    |
-| `DELETE` | `/api/properties/:id` | Delete listing                    |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/properties` | List all (supports query filters) |
+| `GET` | `/api/properties/:id` | Get single property |
+| `POST` | `/api/properties` | Create new listing |
+| `PUT` | `/api/properties/:id` | Update listing |
+| `DELETE` | `/api/properties/:id` | Delete listing |
 
 **Query Parameters for `GET /api/properties`:**
 
-| Param             | Values                                           | Description                 |
-| ----------------- | ------------------------------------------------ | --------------------------- |
-| `category`        | `PG` \| `Flat` \| `Mess` \| `All`                | Filter by type              |
-| `location`        | string                                           | Case-insensitive city match |
-| `area`            | string                                           | Neighbourhood filter        |
-| `furnishedStatus` | `Furnished` \| `Semi-Furnished` \| `Unfurnished` | Filter                      |
-| `maxPrice`        | number                                           | Upper rent limit            |
-| `search`          | string                                           | Full-text keyword search    |
+| Param | Values | Description |
+|-------|--------|-------------|
+| `category` | `PG` \| `Flat` \| `Mess` \| `All` | Filter by type |
+| `location` | string | Case-insensitive city match |
+| `area` | string | Neighbourhood filter |
+| `furnishedStatus` | `Furnished` \| `Semi-Furnished` \| `Unfurnished` | Filter |
+| `maxPrice` | number | Upper rent limit |
+| `search` | string | Full-text keyword search |
 
 **`POST /api/properties` — Request Body:**
-
 ```json
 {
   "title": "Sunrise Student PG",
@@ -586,15 +572,14 @@ curl -X POST http://localhost:5000/api/seed
 
 ### Bookings Endpoints
 
-| Method   | Endpoint                   | Description                           |
-| -------- | -------------------------- | ------------------------------------- |
-| `POST`   | `/api/bookings`            | Submit booking request                |
-| `GET`    | `/api/bookings`            | List all bookings (`?status=Pending`) |
-| `PATCH`  | `/api/bookings/:id/status` | Update booking status                 |
-| `DELETE` | `/api/bookings/:id`        | Delete booking record                 |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/bookings` | Submit booking request |
+| `GET` | `/api/bookings` | List all bookings (`?status=Pending`) |
+| `PATCH` | `/api/bookings/:id/status` | Update booking status |
+| `DELETE` | `/api/bookings/:id` | Delete booking record |
 
 **`POST /api/bookings` — Request Body:**
-
 ```json
 {
   "propertyId": "64f1a2b3c4d5e6f7a8b9c0d1",
@@ -608,11 +593,9 @@ curl -X POST http://localhost:5000/api/seed
 ```
 
 **`PATCH /api/bookings/:id/status` — Request Body:**
-
 ```json
 { "status": "Confirmed" }
 ```
-
 Valid values: `Pending` | `Confirmed` | `Rejected`
 
 ---
@@ -620,7 +603,6 @@ Valid values: `Pending` | `Confirmed` | `Rejected`
 ### Seed Endpoint
 
 #### `POST /api/seed`
-
 Clears existing records and inserts default sample properties & bookings.
 
 ---
@@ -630,7 +612,6 @@ Clears existing records and inserts default sample properties & bookings.
 The chatbot runs as a **separate Flask service on port 5001**.
 
 #### `POST /api/chat`
-
 ```json
 // Request
 { "message": "How do I book a mess?" }
@@ -642,8 +623,7 @@ The chatbot runs as a **separate Flask service on port 5001**.
 { "reply": "I'm not sure about that. Please contact support or browse our listings." }
 ```
 
-#### `GET /api/health` _(chatbot)_
-
+#### `GET /api/health` *(chatbot)*
 ```json
 { "status": "ok", "model": "loaded" }
 ```
@@ -658,13 +638,11 @@ The chatbot runs as a **separate Flask service on port 5001**.
 Access via the **"Admin Portal"** button in the navbar.
 
 **Listing Management:**
-
 - Add properties with image URLs, amenities, prices, and WhatsApp numbers
 - Edit or toggle availability of existing listings
 - Remove out-of-service listings
 
 **Booking Management:**
-
 - Monitor real-time student reservation inquiries
 - Mark as **Confirmed** or **Rejected**
 - Contact applicants using recorded details
@@ -673,15 +651,15 @@ Access via the **"Admin Portal"** button in the navbar.
 
 ## 🔧 Troubleshooting & Gotchas
 
-| Issue                                      | Cause                                 | Fix                                                                             |
-| ------------------------------------------ | ------------------------------------- | ------------------------------------------------------------------------------- |
-| MongoDB Atlas connection timeout (Windows) | ISP DNS fails to resolve SRV records  | `server.js` auto-forces Google DNS `8.8.8.8` at startup                         |
-| CORS errors                                | Backend not running on `:5000`        | Ensure Express backend is running; CORS is enabled for `:5173`                  |
-| Chatbot "Could not connect to AI server"   | Flask not running or `.pkl` missing   | Run `python train.py` then `python app.py`                                      |
-| `multi_class` FutureWarning (scikit-learn) | scikit-learn ≥ 1.5 deprecation        | Non-breaking warning; will be fixed in next update                              |
-| UnicodeEncodeError on Windows terminal     | `cp1252` console can't render emoji   | All Python `print()` statements avoid emoji characters                          |
-| Docker port conflict                       | Another process using `:80` / `:5000` | `netstat -ano \| findstr :80` → kill PID or remap port in `docker-compose.yaml` |
-| Frontend shows stale version after rebuild | Docker layer cache                    | `docker compose build --no-cache frontend && docker compose up -d frontend`     |
+| Issue | Cause | Fix |
+|-------|-------|-----|
+| MongoDB Atlas connection timeout (Windows) | ISP DNS fails to resolve SRV records | `server.js` auto-forces Google DNS `8.8.8.8` at startup |
+| CORS errors | Backend not running on `:5000` | Ensure Express backend is running; CORS is enabled for `:5173` |
+| Chatbot "Could not connect to AI server" | Flask not running or `.pkl` missing | Run `python train.py` then `python app.py` |
+| `multi_class` FutureWarning (scikit-learn) | scikit-learn ≥ 1.5 deprecation | Non-breaking warning; will be fixed in next update |
+| UnicodeEncodeError on Windows terminal | `cp1252` console can't render emoji | All Python `print()` statements avoid emoji characters |
+| Docker port conflict | Another process using `:80` / `:5000` | `netstat -ano \| findstr :80` → kill PID or remap port in `docker-compose.yaml` |
+| Frontend shows stale version after rebuild | Docker layer cache | `docker compose build --no-cache frontend && docker compose up -d frontend` |
 
 ---
 
