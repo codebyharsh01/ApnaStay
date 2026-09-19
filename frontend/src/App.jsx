@@ -21,6 +21,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('explore'); // 'explore' or 'admin'
   const [properties, setProperties] = useState([]);
   const [bookings, setBookings] = useState([]);
+  const [adminOverview, setAdminOverview] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -198,6 +199,17 @@ export default function App() {
     }
   };
 
+  const fetchAdminOverview = async () => {
+    try {
+      const res = await axios.get(`${API_BASE}/admin/overview`);
+      if (res.data && res.data.success) {
+        setAdminOverview(res.data.data);
+      }
+    } catch (err) {
+      console.warn('Could not fetch admin overview:', err.message);
+    }
+  };
+
   // Fetch user specific bookings & notifications
   const fetchUserBookingsAndNotifications = async (user = currentUser) => {
     if (!user) return;
@@ -278,14 +290,20 @@ export default function App() {
     if (currentUser) {
       fetchUserBookingsAndNotifications(currentUser);
     }
+    if (activeTab === 'admin' && isAdminLoggedIn) {
+      fetchAdminOverview();
+    }
     const interval = setInterval(() => {
       fetchBookings();
       if (currentUser) {
         fetchUserBookingsAndNotifications(currentUser);
       }
+      if (activeTab === 'admin' && isAdminLoggedIn) {
+        fetchAdminOverview();
+      }
     }, 8000);
     return () => clearInterval(interval);
-  }, [currentUser]);
+  }, [currentUser, activeTab, isAdminLoggedIn]);
 
   const handleResetFilters = () => {
     setFilters({
@@ -568,6 +586,7 @@ export default function App() {
           <AdminPortal
             properties={properties}
             bookings={bookings}
+            overview={adminOverview}
             adminUser={adminUser}
             onAdminLogout={handleAdminLogout}
             onCreateProperty={handleCreateProperty}
@@ -578,6 +597,7 @@ export default function App() {
             onRefreshData={() => {
               fetchProperties();
               fetchBookings();
+              fetchAdminOverview();
               if (currentUser) {
                 fetchUserBookingsAndNotifications(currentUser);
               }

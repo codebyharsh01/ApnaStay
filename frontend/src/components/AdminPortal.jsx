@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { PlusCircle, Trash2, Edit3, CheckCircle2, XCircle, Clock, Building, UserCheck, RefreshCw, Terminal, Phone, Mail, Calendar, LogOut } from 'lucide-react';
+import { PlusCircle, Trash2, Edit3, CheckCircle2, XCircle, Clock, Building, UserCheck, RefreshCw, Terminal, Phone, Mail, Calendar, LogOut, Users, BarChart3, MapPin } from 'lucide-react';
 
 export default function AdminPortal({
   properties,
   bookings,
+  overview,
   adminUser,
   onAdminLogout,
   onCreateProperty,
@@ -14,7 +15,19 @@ export default function AdminPortal({
   onRefreshData,
   onOpenPostmanGuide
 }) {
-  const [adminTab, setAdminTab] = useState('bookings'); // 'bookings' or 'properties' or 'addProperty'
+  const [adminTab, setAdminTab] = useState('overview');
+
+  const overviewStats = overview?.stats || {
+    totalUsers: 0,
+    totalProperties: properties.length,
+    bookedProperties: 0,
+    total: bookings.length,
+    confirmed: 0,
+    pending: bookings.length,
+    rejected: 0
+  };
+
+  const formatDate = (date) => date ? new Date(date).toLocaleDateString() : 'No activity';
 
   // Form state for creating / editing property
   const [editingPropertyId, setEditingPropertyId] = useState(null);
@@ -155,6 +168,18 @@ export default function AdminPortal({
       {/* Admin Tabs */}
       <div className="flex items-center gap-2 overflow-x-auto no-scrollbar border-b border-slate-200 pb-2">
         <button
+          onClick={() => setAdminTab('overview')}
+          className={`flex items-center gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl font-bold text-xs shrink-0 transition-all ${
+            adminTab === 'overview'
+              ? 'bg-slate-900 text-white shadow-md'
+              : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+          }`}
+        >
+          <BarChart3 className="w-4 h-4" />
+          <span>Overview</span>
+        </button>
+
+        <button
           onClick={() => setAdminTab('bookings')}
           className={`flex items-center gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl font-bold text-xs shrink-0 transition-all ${
             adminTab === 'bookings'
@@ -193,6 +218,131 @@ export default function AdminPortal({
           <span>{editingPropertyId ? 'Edit Property' : '+ Post New Property'}</span>
         </button>
       </div>
+
+      {adminTab === 'overview' && (
+        <div className="space-y-6">
+          <div className="grid grid-cols-2 lg:grid-cols-6 gap-3">
+            {[
+              { label: 'Registered Users', value: overviewStats.totalUsers, icon: Users, color: 'text-indigo-600 bg-indigo-50' },
+              { label: 'Properties', value: overviewStats.totalProperties, icon: Building, color: 'text-teal-600 bg-teal-50' },
+              { label: 'Booked Properties', value: overviewStats.bookedProperties, icon: MapPin, color: 'text-amber-600 bg-amber-50' },
+              { label: 'Total Bookings', value: overviewStats.total, icon: Calendar, color: 'text-slate-700 bg-slate-100' },
+              { label: 'Confirmed', value: overviewStats.confirmed, icon: CheckCircle2, color: 'text-emerald-600 bg-emerald-50' },
+              { label: 'Pending', value: overviewStats.pending, icon: Clock, color: 'text-orange-600 bg-orange-50' }
+            ].map(({ label, value, icon: Icon, color }) => (
+              <div key={label} className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+                <div className={`w-9 h-9 rounded-xl flex items-center justify-center mb-3 ${color}`}>
+                  <Icon className="w-4 h-4" />
+                </div>
+                <div className="text-2xl font-extrabold text-slate-900">{value}</div>
+                <div className="text-[11px] text-slate-500 font-semibold mt-1">{label}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 xl:grid-cols-5 gap-6">
+            <div className="xl:col-span-3 bg-white rounded-3xl border border-slate-200 p-5 shadow-sm">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">Registered Users</h3>
+                  <p className="text-xs text-slate-500">Bookings and properties selected by each user</p>
+                </div>
+                <Users className="w-5 h-5 text-indigo-500" />
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs text-slate-700">
+                  <thead className="text-[10px] uppercase tracking-wider text-slate-500 border-b border-slate-200">
+                    <tr>
+                      <th className="py-2 pr-3">User</th>
+                      <th className="py-2 px-3">Contact</th>
+                      <th className="py-2 px-3 text-center">Bookings</th>
+                      <th className="py-2 px-3 text-center">Properties</th>
+                      <th className="py-2 pl-3">Joined</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {(overview?.users || []).map((user) => (
+                      <tr key={user._id} className="hover:bg-slate-50">
+                        <td className="py-3 pr-3">
+                          <div className="font-bold text-slate-900">{user.name}</div>
+                          <div className="text-[10px] text-slate-500">{user.email}</div>
+                        </td>
+                        <td className="py-3 px-3 text-[11px]">{user.phone}</td>
+                        <td className="py-3 px-3 text-center font-bold">{user.totalBookings}</td>
+                        <td className="py-3 px-3 text-center font-bold text-indigo-700">{user.propertiesBooked}</td>
+                        <td className="py-3 pl-3 text-[11px] text-slate-500">{formatDate(user.createdAt)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {overview && overview.users.length === 0 && (
+                  <p className="text-center text-xs text-slate-400 py-8">No registered users yet.</p>
+                )}
+              </div>
+            </div>
+
+            <div className="xl:col-span-2 bg-white rounded-3xl border border-slate-200 p-5 shadow-sm">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">Most Booked Properties</h3>
+                  <p className="text-xs text-slate-500">Demand across all booking statuses</p>
+                </div>
+                <Building className="w-5 h-5 text-teal-500" />
+              </div>
+              <div className="space-y-3">
+                {(overview?.properties || []).slice(0, 6).map((property) => (
+                  <div key={property._id} className="border-b border-slate-100 pb-3 last:border-0 last:pb-0">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <div className="font-bold text-sm text-slate-900 truncate">{property.title}</div>
+                        <div className="text-[10px] text-slate-500">{property.category} · {property.location}</div>
+                      </div>
+                      <span className="shrink-0 bg-teal-50 text-teal-700 rounded-lg px-2 py-1 text-xs font-extrabold">
+                        {property.bookingCount} bookings
+                      </span>
+                    </div>
+                    <div className="flex gap-3 text-[10px] text-slate-500 mt-2">
+                      <span className="text-emerald-700">{property.confirmedBookings} confirmed</span>
+                      <span className="text-amber-700">{property.pendingBookings} pending</span>
+                    </div>
+                  </div>
+                ))}
+                {overview && overview.properties.length === 0 && (
+                  <p className="text-center text-xs text-slate-400 py-8">No properties available.</p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-sm">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-bold text-slate-900">Recent Booking Activity</h3>
+                <p className="text-xs text-slate-500">Latest requests across all users</p>
+              </div>
+              <button onClick={() => setAdminTab('bookings')} className="text-xs font-bold text-indigo-600 hover:text-indigo-800">Manage all bookings</button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+              {(overview?.recentBookings || []).slice(0, 6).map((booking) => (
+                <div key={booking._id} className="border border-slate-200 rounded-2xl p-3">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <div className="font-bold text-sm text-slate-900">{booking.studentName}</div>
+                      <div className="text-[10px] text-slate-500">{booking.studentEmail}</div>
+                    </div>
+                    <span className={`text-[10px] font-bold px-2 py-1 rounded-full ${booking.status === 'Confirmed' ? 'bg-emerald-100 text-emerald-800' : booking.status === 'Rejected' ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800'}`}>{booking.status}</span>
+                  </div>
+                  <div className="text-xs text-slate-700 mt-3 truncate">{booking.propertyTitle}</div>
+                  <div className="text-[10px] text-slate-500 mt-1">Move-in {booking.moveInDate} · {formatDate(booking.createdAt)}</div>
+                </div>
+              ))}
+            </div>
+            {overview && overview.recentBookings.length === 0 && (
+              <p className="text-center text-xs text-slate-400 py-8">No booking activity yet.</p>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* TAB 1: Student Bookings */}
       {adminTab === 'bookings' && (
