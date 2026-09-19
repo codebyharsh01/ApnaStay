@@ -9,7 +9,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 # ── App Setup ────────────────────────────────────────────────────────────────
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173", "http://localhost:3000", "http://localhost:5174"])
+CORS(app)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "model.pkl")

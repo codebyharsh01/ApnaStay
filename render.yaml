@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: apnastay-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+
+  - type: web
+    name: apnastay-chatbot
+    runtime: docker
+    rootDir: chatbot
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health

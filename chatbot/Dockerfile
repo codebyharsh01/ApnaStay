@@ -12,10 +12,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application source and pre-trained model artefacts
+# Train the model from tracked source data so deployments do not depend on
+# ignored local pickle files.
+COPY data ./data
+COPY train.py .
+RUN python train.py
+
+# Copy application source and generated model artefacts
 COPY app.py .
-COPY model.pkl .
-COPY vectorizer.pkl .
 
 # Create a non-root user
 RUN useradd -m apnastay && chown -R apnastay /app
